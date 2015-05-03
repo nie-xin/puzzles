@@ -17,3 +17,11 @@ var numberToMoney = function(n) {
   
   return integerPart + '.' + decimalPart;
 };
+
+// best solution
+function numberToMoney(n) {
+  return String(Math.floor(n * 100) / 100).replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+}
+
+// truncate: Math.floor(n * 100) / 100)
+// rounding: n.toFixed(2)
