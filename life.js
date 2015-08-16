@@ -90,3 +90,32 @@ BouncingCritter.prototype.act = function(view) {
   return {type: "move", direction: this.direction};
 };
 
+
+/**
+ * @param  {object} legend  - contains constructors for each character in the map
+ * @param  {string} ch      - the character
+ * @return {object} element - the element object in the world
+ */
+function elementFromChar(legend, ch) {
+  if (ch == " ")
+    return null;
+  var element = new legend[ch]();
+  element.originChar = ch;
+
+  return element;
+}
+
+/**
+ * @param {array}  map    - the plan
+ * @param {object} legend - presents each character in the map
+ */
+function World(map, legend) {
+  var grid = new Grid(map[0].length, map.length);
+  this.grid = grid;
+  this.legend = legend;
+
+  map.forEach(function(line, y) {
+    for (var x = 0; x < line.length; x++)
+      grid.set(new Vector(x, y), elementFromChar(legend, line[x]));
+  });
+}
